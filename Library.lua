@@ -3525,7 +3525,7 @@ function Library:CreateWindow(...)
             task.spawn(function()
                 -- TODO: add cursor fade?
                 local State, Cursor, CursorOutline = InputService.MouseIconEnabled;
-                
+                warn("New")
                 if not Solara then
                     Cursor = Drawing.new('Triangle');
                     Cursor.Thickness = 1;
