@@ -8,6 +8,7 @@ local TweenService = game:GetService('TweenService');
 local RenderStepped = RunService.RenderStepped;
 local LocalPlayer = Players.LocalPlayer;
 local Mouse = LocalPlayer:GetMouse();
+local Solara = getexecutorname() == "Solara";
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
@@ -3525,18 +3526,21 @@ function Library:CreateWindow(...)
                 -- TODO: add cursor fade?
                 local State = InputService.MouseIconEnabled;
 
-                local Cursor = Drawing.new('Triangle');
-                Cursor.Thickness = 1;
-                Cursor.Filled = true;
-                Cursor.Visible = true;
+                if not Solara then
+                    local Cursor = Drawing.new('Triangle');
+                    Cursor.Thickness = 1;
+                    Cursor.Filled = true;
+                    Cursor.Visible = true;
+    
+                    local CursorOutline = Drawing.new('Triangle');
+                    CursorOutline.Thickness = 1;
+                    CursorOutline.Filled = false;
+                    CursorOutline.Color = Color3.new(0, 0, 0);
+                    CursorOutline.Visible = true;
+                end
 
-                local CursorOutline = Drawing.new('Triangle');
-                CursorOutline.Thickness = 1;
-                CursorOutline.Filled = false;
-                CursorOutline.Color = Color3.new(0, 0, 0);
-                CursorOutline.Visible = true;
-
-                while Toggled and ScreenGui.Parent do
+                while Toggled and ScreenGui.Parent and not Solara do
+                        
                     InputService.MouseIconEnabled = false;
 
                     local mPos = InputService:GetMouseLocation();
@@ -3554,10 +3558,12 @@ function Library:CreateWindow(...)
                     RenderStepped:Wait();
                 end;
 
-                InputService.MouseIconEnabled = State;
-
-                Cursor:Remove();
-                CursorOutline:Remove();
+                if not Solara then
+                    InputService.MouseIconEnabled = State;
+                        
+                    Cursor:Remove();
+                    CursorOutline:Remove();
+                end
             end);
         end;
 
