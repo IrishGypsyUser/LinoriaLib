@@ -3525,8 +3525,8 @@ function Library:CreateWindow(...)
             task.spawn(function()
                 -- TODO: add cursor fade?
                 local State, Cursor, CursorOutline = InputService.MouseIconEnabled;
-                warn("New")
-                if not Solara then
+                
+                if not UseNormalCursor then
                     Cursor = Drawing.new('Triangle');
                     Cursor.Thickness = 1;
                     Cursor.Filled = true;
@@ -3539,7 +3539,7 @@ function Library:CreateWindow(...)
                     CursorOutline.Visible = true;
                 end
 
-                while Toggled and ScreenGui.Parent and not Solara do
+                while Toggled and ScreenGui.Parent and not UseNormalCursor do
                         
                     InputService.MouseIconEnabled = false;
 
@@ -3558,7 +3558,7 @@ function Library:CreateWindow(...)
                     RenderStepped:Wait();
                 end;
 
-                if not Solara then
+                if not UseNormalCursor then
                     InputService.MouseIconEnabled = State;
                         
                     Cursor:Remove();
